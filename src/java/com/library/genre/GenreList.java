@@ -31,7 +31,7 @@ public class GenreList {
                 Statement stmt = Database.getConnection().createStatement();
                 ResultSet rs = stmt.executeQuery("select *from genre");
                 while(rs.next()){
-                    authorList.add(new Genre(rs.getString("name")));
+                    authorList.add(new Genre(rs.getString("name"), rs.getLong("id")));
                 }
             } catch (NamingException ex) {
                 Logger.getLogger(AuthorList.class.getName()).log(Level.SEVERE, null, ex);

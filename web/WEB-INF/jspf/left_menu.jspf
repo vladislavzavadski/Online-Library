@@ -1,0 +1,18 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="com.library.genre.Genre"%>
+<%@page import="com.library.genre.GenreList"%>
+<%@ page pageEncoding="UTF-8" %>
+<div id="text2" style="position:absolute; overflow:hidden; left:90px; top:280px; width:158px; height:63px; z-index:5">
+<div class="wpmd">
+<div><font color="#FF6600" face="Times New Roman" class="ws28"><I>Жанр:</I></font></div>
+</div></div>
+<%  GenreList list = new GenreList();
+    int i = 0;
+    String k;
+    
+    for(Genre temp: list.getGenrelist()){%>
+<div id="text3" style="position:absolute; overflow:hidden; left:90px; top:<%=335+35*i%>px; width:200px; height:46px; z-index:6">
+<div class="wpmd">
+    <a href="books.jsp?id=<%=temp.getId()%>&name=<%=temp.getName()%>"><div><font color="#FF0000" face="Times New Roman" class="ws18"><%=temp.getName().charAt(0)%></font><font color="#000000" face="Times New Roman" class="ws18"><%=temp.getName().substring(1)%></font></div></a>
+</div></div>
+<%i++;}%>

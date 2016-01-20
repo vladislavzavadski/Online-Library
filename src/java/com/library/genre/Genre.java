@@ -11,11 +11,16 @@ package com.library.genre;
  */
 public class Genre implements Comparable{
     private String name;
-    public Genre(String name){
+    private long id;
+    public Genre(String name, long id){
         this.name = name;
+        this.id = id;
     }
     public String getName(){
         return name;
+    }
+    public long getId(){
+        return id;
     }
     @Override
     public int compareTo(Object o) {
