@@ -36,6 +36,7 @@ DIV,UL,OL /* Left */
 
 </head>
 <body>
+    <%request.setCharacterEncoding("UTF-8");%>
 <div id="image1" style="position:absolute; overflow:hidden; left:56px; top:9px; width:234px; height:169px; z-index:0"><img src="images/logo.jpg" alt="" title="" border=0 width=234 height=169></div>
 
 <div id="text1" style="position:absolute; overflow:hidden; left:354px; top:50px; width:858px; height:98px; z-index:1">
@@ -43,9 +44,23 @@ DIV,UL,OL /* Left */
 <div><font color="#FF6600" face="Wide Latin" class="ws48"><I>Online Library</I></font></div>
 </div></div>
 
-<input name="searchLine" type="text" style="position:absolute;width:443px;left:365px;top:179px;z-index:2">
-<input name="searchButton" type="submit" value="Найти" style="position:absolute;left:830px;top:179px;z-index:3">
-<select name="formselect1" style="position:absolute;left:907px;top:179px;width:200px;z-index:4">
-<option value="0">Автор</option>
-<option value="1">Книга</option>
+<form name="search_form" method="GET" action="../pages/books.jsp">
+    <input name="searchLine" <%if(request.getParameter("searchLine")!=null){%> value="<%=request.getParameter("searchLine")%><%}%>" type="text" style="position:absolute;width:443px;left:365px;top:179px;z-index:2">
+    <input type="submit" value="Найти" style="position:absolute;left:830px;top:179px;z-index:3"/>
+    <select name="search_type" style="position:absolute;left:907px;top:179px;width:200px;z-index:4">
+    <option value="0">Автор</option>
+    <option value="1">Книга</option>
 </select>
+</form>
+<%
+    if(request.getParameter("username")!=null){
+        session.setAttribute("username", request.getParameter("username"));
+    }
+%>
+<div id="text4" style="position:absolute; overflow:hidden; left:973px; top:0px; width:493px; height:64px; z-index:8">
+<div class="wpmd">
+    <div><font color="#FF6600" face="Times New Roman" class="ws18"><I>Здравствуйте, <%=session.getAttribute("username")%>.</I></font><font face="Times New Roman" class="ws16">&nbsp;&nbsp; </font><font color="#0000FF" face="Times New Roman" class="ws16"><U><I><a href="../index.jsp">выход</a></U></I></font><font face="Times New Roman" class="ws16">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font></div>
+<div><font face="Times New Roman" class="ws16">&nbsp;&nbsp;&nbsp; </font></div>
+</div></div>
+
+

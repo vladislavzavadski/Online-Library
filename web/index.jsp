@@ -9,10 +9,13 @@
     </head>
 
     <body>
+        <%
+            session.invalidate();
+        %>
         <div class="main">
 
             <div class="content">
-                <p class="title"><span class="text"><img src="images/lib.png" width="76" height="77" hspace="10" vspace="10" align="middle"></span></p>
+                <p class="title"><span class="text"><img src="pages/images/lib.png" width="76" height="77" hspace="10" vspace="10" align="middle"></span></p>
                 <p class="title">Онлайн библиотека</p>
                 <p class="text">Добро пожаловать в онлайн библиотеку, где вы сможете найти любую книгу на ваш вкус. Доступны функции поиска, просмотра, сортировки и многие другие.</p>
                 <p class="text">Проект находится в разработке, поэтому дизайн и функционал будет постоянно дорабатываться.</p>

@@ -9,21 +9,34 @@
 <%@page import="com.library.book.BookList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="../WEB-INF/jspf/left_menu.jspf"%>
+<%@include file="../WEB-INF/jspf/letters.jspf" %>
 <!DOCTYPE html>
 <%request.setCharacterEncoding("UTF-8");%>
 <div id="text3" style="position:absolute; overflow:hidden; left:610px; top:240px; width:300px; height:34px; z-index:7">
 <div class="wpmd">
     
-<div><font color="#800000" face="Times New Roman" class="ws22"><I>Жанр: <%=request.getParameter("name")%></I></font></div>
-</div></div>
+
 <%
- long id = Long.valueOf(request.getParameter("id"));
  BookList bookList = new BookList();
- ArrayList<Book> booklist = bookList.getBooksByGenre(id);
+ ArrayList<Book> booklist =null;
+ if(request.getParameter("id")!=null){
+    long id = Long.valueOf(request.getParameter("id"));
+    booklist = bookList.getBooksByGenre(id);
+ }
+ if(request.getParameter("letter")!=null){
+     booklist = bookList.getBooksByLetter(request.getParameter("letter"));
+ }
+ if(request.getParameter("searchLine")!=null){
+     booklist = bookList.getBooksBySearch(request.getParameter("searchLine"), Integer.parseInt(request.getParameter("search_type")));
+ }
  session.setAttribute("bookArrayList", booklist);
- for(int bookNum = 0; bookNum<booklist.size(); bookNum++){
 %>
 
+<div><font color="#800000" face="Times New Roman" class="ws22"><I>Результатов: <%=booklist.size()%></I></font></div>
+</div></div>
+<%
+ for(int bookNum = 0; bookNum<booklist.size(); bookNum++){
+%>
 <div id="text2" style="position:absolute; overflow:hidden; left:370px; top:<%=310+bookNum*200%>px; width:510px; height:300px; z-index:5">
 <div class="wpmd">
 <div align=center><font color="#3366FF" face="Times New Roman" class="ws16"><I>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%=booklist.get(bookNum).getName()%></I></font></div>

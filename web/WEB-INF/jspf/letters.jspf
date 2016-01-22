@@ -1,0 +1,16 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="com.library.common.Letter"%>
+<%@ page pageEncoding="UTF-8" %>
+<%for(int let = 0; let<32; let++){%>
+<div id="text5" style="position:absolute; overflow:hidden; left:<%=330+let*30%>px; top:133px; width:766px; height:31px; z-index:9">
+<a href="../pages/books.jsp?letter=<%=Letter.alphabet[let]%>">
+<div class="wpmd">
+    <div><font <%if(request.getParameter("letter")!=null&&request.getParameter("letter").charAt(0)==Letter.alphabet[let]){%>
+            color="#00CCFF"<%}
+else{%>color="#FF6600"
+<%}%> 
+face="Times New Roman" class="ws18"><%=Letter.alphabet[let]%></font></div>
+</div>
+</a>
+</div>
+<%}%>

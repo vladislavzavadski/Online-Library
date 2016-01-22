@@ -7,12 +7,16 @@
 <div><font color="#FF6600" face="Times New Roman" class="ws28"><I>Жанр:</I></font></div>
 </div></div>
 <%  GenreList list = new GenreList();
-    int i = 0;
-    String k;
-    
+    int i = 0;  
     for(Genre temp: list.getGenrelist()){%>
 <div id="text3" style="position:absolute; overflow:hidden; left:90px; top:<%=335+35*i%>px; width:200px; height:46px; z-index:6">
 <div class="wpmd">
-    <a href="books.jsp?id=<%=temp.getId()%>&name=<%=temp.getName()%>"><div><font color="#FF0000" face="Times New Roman" class="ws18"><%=temp.getName().charAt(0)%></font><font color="#000000" face="Times New Roman" class="ws18"><%=temp.getName().substring(1)%></font></div></a>
+    <a href="books.jsp?id=<%=temp.getId()%>&name=<%=temp.getName()%>"><div>
+            <%if(request.getParameter("name")!=null&&request.getParameter("name").equals(temp.getName())){%>
+            <font color="#00CCFF" face="Times New Roman" class="ws18"><%=temp.getName()%></font>
+            <%} else{%>
+      <font color="#FF0000" face="Times New Roman" class="ws18"><%=temp.getName().charAt(0)%></font><font color="#000000" face="Times New Roman" class="ws18"><%=temp.getName().substring(1)%></font>
+        <%}%>
+        </div></a>
 </div></div>
 <%i++;}%>

@@ -49,4 +49,32 @@ public class BookList {
                 + "where genre_id=" + id + " order by b.name "
                 + "limit 0,5");
     }
+        public ArrayList<Book> getBooksByLetter(String letter) {;
+        return getBookList("select b.id,b.name,b.isbn,b.page_count,b.publish_year, p.name as publisher, a.fio as author, g.name as genre, b.image from book b "
+                + "inner join author a on b.author_id=a.id "
+                + "inner join genre g on b.genre_id=g.id "
+                + "inner join publisher p on b.publisher_id=p.id "
+                + "where substr(b.name,1,1)='" + letter + "' order by b.name "
+                + "limit 0,5");
+
+    }
+        public ArrayList<Book> getBooksBySearch(String searchStr, int type) {
+        StringBuilder sql = new StringBuilder("select b.id,b.name,b.isbn,b.page_count,b.publish_year, p.name as publisher, a.fio as author, g.name as genre, b.image from book b "
+                + "inner join author a on b.author_id=a.id "
+                + "inner join genre g on b.genre_id=g.id "
+                + "inner join publisher p on b.publisher_id=p.id ");
+
+        if (type == 0) {
+            sql.append("where lower(a.fio) like '%" + searchStr.toLowerCase() + "%' order by b.name ");
+
+        } else if (type == 1) {
+            sql.append("where lower(b.name) like '%" + searchStr.toLowerCase() + "%' order by b.name ");
+        }
+        sql.append("limit 0,5");
+
+
+        return getBookList(sql.toString());
+
+
+    }
 }
