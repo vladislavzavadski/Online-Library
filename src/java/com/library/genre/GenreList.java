@@ -8,6 +8,7 @@ package com.library.genre;
 import com.library.author.Author;
 import com.library.author.AuthorList;
 import com.library.database.Database;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,9 +28,13 @@ public class GenreList {
     public ArrayList<Genre> getGenrelist(){
         if(authorList==null){
             authorList = new ArrayList();
+            Statement stmt = null;
+            ResultSet rs = null;
+            Connection con = null;
             try {
-                Statement stmt = Database.getConnection().createStatement();
-                ResultSet rs = stmt.executeQuery("select *from genre");
+                con = Database.getConnection();
+                stmt = con.createStatement();
+                rs = stmt.executeQuery("select *from genre");
                 while(rs.next()){
                     authorList.add(new Genre(rs.getString("name"), rs.getLong("id")));
                 }
@@ -37,6 +42,21 @@ public class GenreList {
                 Logger.getLogger(AuthorList.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 Logger.getLogger(AuthorList.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            finally{
+                
+                try {
+                    if(con!=null){
+                        con.close();
+                    }
+                    if(stmt!=null)
+                        stmt.close();
+                    if(rs!=null)
+                        rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(GenreList.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Database.close();
             }
             Collections.sort(authorList);
             return authorList;

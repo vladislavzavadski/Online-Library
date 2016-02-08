@@ -8,6 +8,7 @@ package com.library.book;
 import com.library.database.Database;
 import java.awt.Image;
 import java.sql.Blob;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -25,9 +26,13 @@ public class BookList {
     public ArrayList<Book> getBookList(String query){
             list = null;
             list = new ArrayList();
+            Statement stmt = null;
+            ResultSet rs = null;
+            Connection con = null;
             try {
-                Statement stmt = Database.getConnection().createStatement();
-                ResultSet rs = stmt.executeQuery(query);
+                con = Database.getConnection();
+                stmt = con.createStatement();
+                rs = stmt.executeQuery(query);
                 while(rs.next()){                
                    list.add(new Book(rs.getLong("id"), rs.getString("name"), rs.getInt("page_count"),
                            rs.getString("isbn"), rs.getString("genre"), rs.getString("author"), rs.getDate("publish_year"), rs.getString("publisher"), rs.getBytes("image")));
@@ -38,7 +43,19 @@ public class BookList {
             } catch (SQLException ex) {
                 Logger.getLogger(BookList.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
+            finally{      
+                try {
+                    if(con!=null)
+                        con.close();
+                    if(stmt!=null)
+                        stmt.close();
+                    if(rs!=null)
+                        rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(BookList.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Database.close();
+            }
         return list;
     }
     public ArrayList<Book> getBooksByGenre(long id){
